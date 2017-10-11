@@ -14,7 +14,7 @@ phases:
     commands:
       - echo Entered the pre_build phase at `date -u` ...
       - echo Logging in to Docker Hub
-      - docker login --username=\"$DOCKERHUB_USERNAME\" --password=\"$DOCKERHUB_PASSWORD\"
+      - docker login --username=\"${DOCKERHUB_USERNAME}\" --password=\"${DOCKERHUB_PASSWORD}\"
   # Use the build phase to run commands during the build, such as running RSpec
   build:
     commands:
