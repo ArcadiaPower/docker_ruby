@@ -1,0 +1,32 @@
+version: 0.2
+
+# Builds https://github.com/ArcadiaPower/docker_ruby:master on change and pushes
+# docker images out to the public Docker Hub
+phases:
+  install:
+    commands:
+      - echo Entered the install phase at `date -u` ...
+      # The CODEBUILD_RESOLVED_SOURCE_VERSION is the SHA from the git commit
+      - echo Using commit $CODEBUILD_RESOLVED_SOURCE_VERSION
+  # Use the pre_build phase to run command before the build, such as logging in
+  # to Amazon ECR, or installing dependencies
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase at `date -u` ...
+      - echo Logging in to Docker Hub
+      - docker login --username=\"$DOCKERHUB_USERNAME\" --password=\"$DOCKERHUB_PASSWORD\"
+  # Use the build phase to run commands during the build, such as running RSpec
+  build:
+    commands:
+      - echo Entered the build phase at `date -u` ...
+      # We're building the docker image here, which does the bundling and may
+      # or may not run the tests. Think about how we want this all structured
+      - docker build . -f ruby-2.4.1.dockerfile -t arcadiapower/ruby-2.4.1:latest
+      - docker build . -f ruby-2.3.4.dockerfile -t arcadiapower/ruby-2.3.4:latest
+  # Use the post_build phase to run commands after the build, such as pushing
+  # a Docker image to Amazon ECR
+  post_build:
+    commands:
+      - echo Entered the post_build phase at `date -u` ...
+      - docker push arcadiapower/ruby-2.4.1:latest
+      - docker push arcadiapower/ruby-2.3.4:latest
