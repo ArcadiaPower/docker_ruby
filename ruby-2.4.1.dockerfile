@@ -2,10 +2,11 @@ FROM ubuntu:16.04
 
 ENV BUNDLE_PATH /bundle
 
-RUN apt-get -y update && apt-get -y install --no-install-recommends build-essential wget nodejs \
-ca-certificates git-core libssl-dev libcurl3-openssl-dev vim \
+RUN apt-get -y update && apt-get -y install --no-install-recommends build-essential \
+ca-certificates chrpath git-core libssl-dev libcurl3-openssl-dev vim \
 libexpat1-dev libffi-dev libreadline-dev libsqlite-dev libxml2-dev \
-libxslt1-dev libxslt-dev libssl-dev libyaml-dev unzip locales && \
+libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
+libxslt-dev libxslt1-dev libyaml-dev locales nodejs unzip wget && \
 locale-gen en_US.UTF-8 && \
 export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 && \
 wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.gz && \
