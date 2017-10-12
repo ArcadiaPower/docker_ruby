@@ -6,7 +6,8 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends build-essent
 ca-certificates chrpath git-core libssl-dev libcurl3-openssl-dev vim \
 libexpat1-dev libffi-dev libreadline-dev libsqlite-dev libxml2-dev \
 libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
-libxslt-dev libxslt1-dev libyaml-dev locales nodejs unzip wget && \
+libgconf-2-4 libxi6 libxslt-dev libxslt1-dev  libyaml-dev locales \
+openjdk-8-jre-headless nodejs unzip wget xvfb && \
 locale-gen en_US.UTF-8 && \
 export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 && \
 wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.gz && \
