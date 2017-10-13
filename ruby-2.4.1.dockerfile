@@ -25,7 +25,7 @@ apt-get -y install --no-install-recommends libpq-dev postgresql-server-dev-9.6 p
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 mkdir -p /app && mkdir -p /bundle && useradd -U -m app
 
-RUN gem update -N --system && gem install -N bundler:1.15.4 rake brakeman rubocop
+RUN gem update -N --system && gem install -N bundler:1.15.4 rake:12.1.0
 
 # Pinned versions are specific to one of the applications I'm using this image
 # in. I'm installing all of the gems that have native extensions just to make

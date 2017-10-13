@@ -28,7 +28,7 @@ mkdir -p /app && mkdir -p /bundle && useradd -U -m app
 # Pinned versions are specific to one of the applications I'm using this image
 # in. I'm installing all of the gems that have native extensions just to make
 # sure everything works
-RUN gem update -N --system && gem install -N bundler:1.15.4 rake brakeman rubocop
+RUN gem update -N --system && gem install -N bundler:1.15.4 rake:12.1.0
 
 # Pinned versions are specific to one of the applications I'm using this image
 # in. I'm installing all of the gems that have native extensions just to make
