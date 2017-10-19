@@ -30,6 +30,39 @@ apt-get -y update \
 && echo "source 'https://rubygems.org'\nruby '~> 2.4.1'\ngem 'pg'\ngem 'nokogiri', '1.8.0'\ngem 'selenium-webdriver', '2.53.4'\ngem 'binding_of_caller'\ngem 'nio4r'\ngem 'websocket-driver', '0.6.5'\ngem 'rainbow'\ngem 'raindrops'\ngem 'ffi'\ngem 'eventmachine'\ngem 'http_parser.rb'\ngem 'debug_inspector'\ngem 'byebug'\ngem 'puma'\ngem 'kgio'\ngem 'unicorn', '5.3.0'\ngem 'selenium-webdriver', '2.53.4'" > Gemfile \
 && bundle install --jobs=4 --retry=3 --quiet \
 && rm Gemfile*
+
+RUN export PHANTOM_JS="phantomjs-2.1.1-linux-x86_64" && \
+wget -q https://github.com/Medium/phantomjs/releases/download/v2.1.1/$PHANTOM_JS.tar.bz2 && \
+tar xvjf $PHANTOM_JS.tar.bz2 && \
+mv $PHANTOM_JS /usr/local/share && \
+ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin && \
+rm $PHANTOM_JS.tar.bz2
+
+
+ENV CHROME_DRIVER_VERSION 2.33
+ENV SELENIUM_STANDALONE_VERSION 3.4.0
+
+# Install Google Chrome Stable
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
+apt-get update -y && \
+apt-get install -y google-chrome-stable
+
+# Install ChromeDriver.
+RUN wget -N http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/ && \
+unzip ~/chromedriver_linux64.zip -d ~/ && \
+rm ~/chromedriver_linux64.zip && \
+mv -f ~/chromedriver /usr/local/bin/chromedriver && \
+chown root:root /usr/local/bin/chromedriver && \
+chmod 0755 /usr/local/bin/chromedriver
+
+# Install Selenium.
+RUN export SELENIUM_SUBDIR=$(echo "$SELENIUM_STANDALONE_VERSION" | cut -d"." -f-2) && \
+wget -N http://selenium-release.storage.googleapis.com/$SELENIUM_SUBDIR/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar -P ~/ && \
+mv -f ~/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar /usr/local/bin/selenium-server-standalone.jar && \
+chown root:root /usr/local/bin/selenium-server-standalone.jar && \
+chmod 0755 /usr/local/bin/selenium-server-standalone.jar
+
 # Pinned versions are specific to one of the applications I'm using this image
 # in. I'm installing all of the gems that have native extensions just to make
 # sure everything works
