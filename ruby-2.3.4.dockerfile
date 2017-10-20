@@ -1,3 +1,4 @@
+# vi: filetype=dockerfile
 FROM ubuntu:16.04
 
 RUN apt-get -y update && apt-get -y install --no-install-recommends build-essential \

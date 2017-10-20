@@ -1,3 +1,4 @@
+# vi: filetype=dockerfile
 FROM ubuntu:16.04
 
 RUN apt-get -y update && apt-get -y install --no-install-recommends build-essential \
@@ -27,7 +28,7 @@ apt-get -y update \
 && useradd -U -m app \
 && gem update -N --system \
 && gem install -N bundler:1.15.4 rake:12.1.0 \
-&& echo "source 'https://rubygems.org'\nruby '~> 2.4.1'\ngem 'pg'\ngem 'nokogiri', '1.8.0'\ngem 'selenium-webdriver', '2.53.4'\ngem 'binding_of_caller'\ngem 'nio4r'\ngem 'websocket-driver', '0.6.5'\ngem 'rainbow'\ngem 'raindrops'\ngem 'ffi'\ngem 'eventmachine'\ngem 'http_parser.rb'\ngem 'debug_inspector'\ngem 'byebug'\ngem 'puma'\ngem 'kgio'\ngem 'unicorn', '5.3.0'\ngem 'selenium-webdriver', '2.53.4'" > Gemfile \
+&& echo "source 'https://rubygems.org'\nruby '~> 2.4.1'\ngem 'pg'\ngem 'nokogiri', '1.8.0'\ngem 'selenium-webdriver', '2.53.4'\ngem 'binding_of_caller'\ngem 'nio4r'\ngem 'websocket-driver', '0.6.5'\ngem 'rainbow'\ngem 'raindrops'\ngem 'ffi'\ngem 'eventmachine', '1.0.9.1'\ngem 'http_parser.rb'\ngem 'debug_inspector'\ngem 'byebug'\ngem 'puma'\ngem 'kgio'\ngem 'unicorn', '5.3.0'\ngem 'selenium-webdriver', '2.53.4'" > Gemfile \
 && bundle install --jobs=4 --retry=3 --quiet \
 && rm Gemfile*
 
