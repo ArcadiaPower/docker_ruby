@@ -23,14 +23,7 @@ apt-get -y update \
 && apt-get -y install --no-install-recommends libpq-dev postgresql-server-dev-9.6 postgresql-client-9.6 \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-&& mkdir -p /app \
-&& mkdir -p /bundle \
-&& useradd -U -m app \
-&& gem update -N --system \
-&& gem install -N bundler:1.15.4 rake:12.1.0 \
-&& echo "source 'https://rubygems.org'\nruby '~> 2.4.1'\ngem 'pg'\ngem 'nokogiri', '1.8.0'\ngem 'selenium-webdriver', '2.53.4'\ngem 'binding_of_caller'\ngem 'nio4r'\ngem 'websocket-driver', '0.6.5'\ngem 'rainbow'\ngem 'raindrops'\ngem 'ffi'\ngem 'eventmachine', '1.0.9.1'\ngem 'http_parser.rb'\ngem 'debug_inspector'\ngem 'byebug'\ngem 'puma'\ngem 'kgio'\ngem 'unicorn', '5.3.0'\ngem 'selenium-webdriver', '2.53.4'" > Gemfile \
-&& bundle install --jobs=4 --retry=3 --quiet \
-&& rm Gemfile*
+&& useradd -U -m app
 
 RUN export PHANTOM_JS="phantomjs-2.1.1-linux-x86_64" && \
 wget -q https://github.com/Medium/phantomjs/releases/download/v2.1.1/$PHANTOM_JS.tar.bz2 && \
@@ -39,9 +32,8 @@ mv $PHANTOM_JS /usr/local/share && \
 ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin && \
 rm $PHANTOM_JS.tar.bz2
 
-
-ENV CHROME_DRIVER_VERSION 2.33
-ENV SELENIUM_STANDALONE_VERSION 3.4.0
+ENV CHROME_DRIVER_VERSION 2.35
+ENV SELENIUM_STANDALONE_VERSION 3.8.1
 
 # Install Google Chrome Stable
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
