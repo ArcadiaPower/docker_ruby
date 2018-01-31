@@ -36,10 +36,22 @@ ENV CHROME_DRIVER_VERSION 2.35
 ENV SELENIUM_STANDALONE_VERSION 3.8.1
 
 # Install Google Chrome Stable
+# NOTE: we don't actually use this package but we want to get it's dependencies
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
-apt-get update -y && \
-apt-get install -y google-chrome-stable
+  echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
+  apt-get update -y && \
+  apt-get install -y google-chrome-stable
+
+# At the time of writing this installs 65.0.3325.31-1, which we need since it supports the
+# --disable-dev-shm-usage flag, and the stable builds do not. Once stable main catches up,
+# we can axe this whole stanza
+RUN export CHROME_PACKAGE="google-chrome-unstable_current_amd64.deb" && \
+  wget -q https://dl.google.com/linux/direct/$CHROME_PACKAGE && \
+  dpkg -i $CHROME_PACKAGE && \
+  # No need for downstream apps to know
+  rm -rf /opt/google/chrome && \
+  mv /opt/google/chrome-unstable /opt/google/chrome && \
+  rm $CHROME_PACKAGE
 
 # Install ChromeDriver.
 RUN wget -N http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/ && \
