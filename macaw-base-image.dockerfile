@@ -10,7 +10,7 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends build-essent
 ca-certificates chrpath git-core libssl-dev libcurl3-openssl-dev vim \
 libexpat1-dev libffi-dev libreadline-dev libxml2-dev \
 libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
-libgconf-2-4 libxi6 libxslt-dev libxslt1-dev  libyaml-dev locales tesseract-ocr imagemagick \
+libgconf-2-4 libxi6 libxslt-dev libxslt1-dev  libyaml-dev locales tesseract-ocr imagemagick ghostscript \
 nodejs unzip wget xvfb && \
 locale-gen en_US.UTF-8 && \
 export BUNDLE_PATH=/bundle && export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 && \
@@ -19,6 +19,7 @@ tar -xzf ruby-$RUBY_VERSION_PATCH.tar.gz && \
 cd ruby-$RUBY_VERSION_PATCH && ./configure --with-out-ext=tcl --with-out-ext=tk --disable-install-doc && make && make install && \
 make clean && cd .. && \
 rm -rf ruby-$RUBY_VERSION_PATCH.tar.gz && rm -rf ruby-$RUBY_VERSION_PATCH && \
+gem install bundler && \
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 useradd -U -m app
@@ -55,11 +56,12 @@ chmod 0755 /usr/local/bin/selenium-server-standalone.jar
 ENV LC_ALL=en_US.UTF-8 \
 LANG=en_US.UTF-8 \
 LANGUAGE=en_US.UTF-8 \
-BUNDLE_PATH=/bundle \
+BUNDLE_PATH=/home/app/bundle \
 BUNDLE_DISABLE_SHARED_GEMS="1"
 
+USER app
 WORKDIR /app
 
 LABEL maintainer="Arcadia Power Engineering <engineering@arcadiapower.com>" \
-version="0.0.2" \
+version="0.1" \
 description="Ubuntu Ruby 2.4.1 base image for Ruby on Rails work"
