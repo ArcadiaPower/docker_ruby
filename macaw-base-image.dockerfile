@@ -32,7 +32,6 @@ ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin && \
 rm $PHANTOM_JS.tar.bz2
 
 # Install Google Chrome Stable
-# NOTE: we don't actually use this package but we want to get it's dependencies
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
   echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
   apt-get update -y && \
