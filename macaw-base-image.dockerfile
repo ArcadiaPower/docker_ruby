@@ -1,8 +1,6 @@
 # vi: filetype=dockerfile
-FROM ubuntu:16.04
+FROM ruby:2.4.3
 
-ENV RUBY_VERSION 2.4
-ENV RUBY_VERSION_PATCH 2.4.3
 ENV CHROME_DRIVER_VERSION 2.35
 ENV SELENIUM_STANDALONE_VERSION 3.8.1
 
@@ -13,13 +11,6 @@ libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
 libgconf-2-4 libxi6 libxslt-dev libxslt1-dev  libyaml-dev locales tesseract-ocr imagemagick ghostscript \
 nodejs unzip wget xvfb && \
 locale-gen en_US.UTF-8 && \
-export BUNDLE_PATH=/bundle && export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 && \
-wget https://cache.ruby-lang.org/pub/ruby/$RUBY_VERSION/ruby-$RUBY_VERSION_PATCH.tar.gz && \
-tar -xzf ruby-$RUBY_VERSION_PATCH.tar.gz && \
-cd ruby-$RUBY_VERSION_PATCH && ./configure --with-out-ext=tcl --with-out-ext=tk --disable-install-doc && make && make install && \
-make clean && cd .. && \
-rm -rf ruby-$RUBY_VERSION_PATCH.tar.gz && rm -rf ruby-$RUBY_VERSION_PATCH && \
-gem install bundler && \
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 useradd -U -m app
@@ -54,11 +45,8 @@ chmod 0755 /usr/local/bin/selenium-server-standalone.jar
 
 ENV LC_ALL=en_US.UTF-8 \
 LANG=en_US.UTF-8 \
-LANGUAGE=en_US.UTF-8 \
-BUNDLE_PATH=/home/app/bundle \
-BUNDLE_DISABLE_SHARED_GEMS="1"
+LANGUAGE=en_US.UTF-8
 
-USER app
 WORKDIR /app
 
 LABEL maintainer="Arcadia Power Engineering <engineering@arcadiapower.com>" \
