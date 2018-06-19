@@ -31,6 +31,7 @@ RUN apt-get -y update \
     libxslt1-dev \
     libyaml-dev \
     locales \
+    poppler-utils \
     tesseract-ocr \
     imagemagick \
     ghostscript \
