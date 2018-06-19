@@ -5,7 +5,7 @@ ENV CHROME_DRIVER_VERSION 2.35
 ENV SELENIUM_STANDALONE_VERSION 3.8.1
 
 LABEL maintainer="Arcadia Power Engineering <engineering@arcadiapower.com>" \
-      version="0.3" \
+      version="0.4" \
       description="Ubuntu Ruby 2.4.4 base image for Macaw Scrapers"
 
 RUN apt-get -y update \
@@ -37,6 +37,7 @@ RUN apt-get -y update \
     nodejs \
     unzip \
     wget \
+    xpdf \
     xvfb \
  && locale-gen en_US.UTF-8 \
  && apt-get clean \
