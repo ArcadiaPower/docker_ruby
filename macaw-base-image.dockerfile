@@ -1,12 +1,12 @@
 # vi: filetype=dockerfile
-FROM ruby:2.4.4
+FROM ruby:2.5.3
 
 ENV CHROME_DRIVER_VERSION 2.35
 ENV SELENIUM_STANDALONE_VERSION 3.8.1
 
 LABEL maintainer="Arcadia Power Engineering <engineering@arcadiapower.com>" \
-      version="0.4" \
-      description="Ubuntu Ruby 2.4.4 base image for Macaw Scrapers"
+      version="0.5" \
+      description="Ubuntu Ruby 2.5.3 base image for Macaw Scrapers"
 
 RUN apt-get -y update \
  && apt-get -y install --no-install-recommends build-essential \
@@ -82,4 +82,3 @@ LANG=en_US.UTF-8 \
 LANGUAGE=en_US.UTF-8
 
 WORKDIR /app
-
