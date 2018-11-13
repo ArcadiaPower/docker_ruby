@@ -21,10 +21,10 @@ phases:
       - echo Entered the build phase at `date -u` ...
       # We're building the docker image here, which does the bundling and may
       # or may not run the tests. Think about how we want this all structured
-      - docker build . -f ruby-2.4.4.dockerfile -t arcadiapower/ruby-2.4.4:latest
+      - docker build . -f ruby-2.5.3.dockerfile -t arcadiapower/ruby-2.5.3:latest
   # Use the post_build phase to run commands after the build, such as pushing
   # a Docker image to Amazon ECR
   post_build:
     commands:
       - echo Entered the post_build phase at `date -u` ...
-      - docker push arcadiapower/ruby-2.4.4:latest
+      - docker push arcadiapower/ruby-2.5.3:latest
