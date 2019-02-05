@@ -2,10 +2,10 @@
 FROM ruby:2.5.3
 
 ENV CHROME_DRIVER_VERSION 2.45
-ENV SELENIUM_STANDALONE_VERSION 3.8.1
+ENV SELENIUM_STANDALONE_VERSION 3.141.59
 
 LABEL maintainer="Arcadia Power Engineering <engineering@arcadiapower.com>" \
-      version="0.6" \
+      version="0.7" \
       description="Ubuntu Ruby 2.5.3 base image for Macaw Scrapers"
 
 RUN apt-get -y update \
@@ -56,7 +56,7 @@ RUN export PHANTOM_JS="phantomjs-2.1.1-linux-x86_64" \
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
  && apt-get update -y \
- && apt-get install -y google-chrome-beta \
+ && apt-get install -y google-chrome-stable \
  && rm -rf /var/lib/apt/lists/*
 
 # Install ChromeDriver.
